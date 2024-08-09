@@ -1,0 +1,9 @@
+/training
+/validation
+*.json
+*.csv
+*.pkl
+*.pt
+*.tmp
+*.bin
+*.h5
