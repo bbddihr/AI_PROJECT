@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 문의게시판</title>
+    <style>
+            @font-face {
+            font-family: 'Pretendard-Regular';
+            src:
+                url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+                format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Pretendard-Regular', sans-serif;
+            margin: 0;
+            padding: 20px;
+            width:70%
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        select, input[type="text"], textarea {
+            width: 50%;
+            padding: 5px;
+        }
+        .editor-toolbar {
+            background-color: #f2f2f2;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+        .editor-toolbar button {
+            margin-right: 5px;
+        }
+        .file-upload {
+            margin-top: 10px;
+        }
+        .submit-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-buttons button {
+            padding: 5px 20px;
+            margin: 0 5px;
+        }
+
+
+        .editor-container {
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        .editor-toolbar {
+            background-color: #f1f1f1;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .editor-toolbar select, .editor-toolbar button {
+            margin-right: 2px;
+            padding: 2px 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+        .editor-content {
+            min-height: 200px;
+            padding: 10px;
+        }
+        .file-upload {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .file-upload button {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 2px 5px;
+            font-size: 0.9em;
+        }
+        .editor-mode {
+            text-align: right;
+            margin-top: 5px;
+        }
+        .editor-mode button {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 2px 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h2>1:1 문의게시판</h2>
+    <table>
+        <tr>
+            <th>분류</th>
+            <td>
+                <select>
+                    <option>선택하세요</option>
+                    <option>회원</option>
+                    <option>비회원</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td><input type="text" value="abc1234@naver.com"> <input type="checkbox" value="abc1234@naver.com"> 답변받기</td>
+        </tr>
+        <tr>
+            <th>휴대폰</th>
+            <td><input type="text" value="010-1234-5678"></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td><input type="text"></td>
+        </tr>
+
+        <tr>
+            <th>내용</th>
+            <td>
+                <div class="editor-container">
+                    <div class="editor-toolbar">
+                        <select><option>글꼴</option></select>
+                        <select><option>3pt</option></select><br>
+                        <button>가</button>
+                        <button><i>가</i></button>
+                        <button><u>가</u></button>
+                        <button>가</button>
+                        <button>가</button>
+                        <button>■</button>
+                        <button>1.</button>
+                        <button>가</button>
+                        <button>A</button>
+                        <button>T</button>
+                        <button>[]</button>
+                        <button>"</button>
+                        <button>URL</button>
+                        <button>그림</button>
+                        <button>표</button>
+                        <button>시간</button>
+                    </div>
+                    <div class="editor-content" contenteditable="true"></div>
+                </div>
+                <div class="editor-mode">
+                    <button>Editor</button>
+                    <button>HTML</button>
+                    <button>TEXT</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="submit-buttons">
+        <button style="background-color: #f19ec8; color: white;">작성완료</button>
+        <button>취소</button>
+    </div>
+</body>
+</html>

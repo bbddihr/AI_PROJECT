@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요양시설 비용 계산</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7e422ab34489fb5e80e7def0fd930351&libraries=services"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+      @font-face {
+            font-family: 'Pretendard-Regular';
+            src:
+                url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+                format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Pretendard-Regular', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .calc-container {
+            text-align: center;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .calc-header {
+            background-color: #03c75a;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+        }
+        .calc-header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .initial-value-group, .period-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .initial-value-group label, .period-group label {
+            display: block;
+            font-size: 1.1em;
+            color: #2c6b2f;
+            margin-bottom: 5px;
+        }
+        .initial-value-group input, .period-group input {
+            width: 100%;
+            font-size: 1.5em;
+            padding: 10px;
+            border: 1px solid #c4c4c4;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: right;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .input-group .unit {
+            margin-left: 5px;
+            font-size: 1.1em;
+            color: #2c6b2f;
+        }
+        .period-group label {
+            display: inline-block;
+            margin-right: 10px;
+
+        }
+        .period-group input[type="radio"] {
+            margin-right: 5px;
+            accent-color: #2c6b2f;
+            vertical-align: middle
+        }
+        .result {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #03c75a;
+            padding: 10px;
+            border: 2px solid #03c75a;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+    <div class="calc-container">
+        <div class="calc-header">
+            <h1>시설 이용비용 간편계산기</h1>
+        </div>
+        <form>
+            <div class="initial-value-group">
+                <br><br>
+                <label for="initial-value">일일 이용료 :</label>
+                <div class="input-group">
+                    <input type="number" id="initial-value" value="27200" readonly>
+                    <span class="unit">원</span>
+                </div>
+            </div>
+            
+            <div class="initial-value-group">
+                <br><br>
+                <label for="initial-value">프로모션 코드 :</label>
+                <div class="input-group">
+                    <input type="text" id="initial-value" style="font-size: 15px;font-style: italic;" value="여기에 코드를 입력하세요.">
+                </div>
+            </div>
+
+           <div>
+            <div class="period-group">
+                <label><input type="radio" name="period" value="30" checked> 1개월 </label>
+                <label><input type="radio" name="period" value="180"> 6개월</label>
+                <label><input type="radio" name="period" value="365"> 1년</label>
+            </div>
+        </div>
+            <div class="result">
+                예상비용 : <span id="result">0</span> 원
+            </div>
+            <p class="note">⚠ 정확한 금액은 시설에 확인해야 합니다.</p>
+        </form>
+    </div>
+
+    <script>
+        const periodRadios = document.querySelectorAll('input[name="period"]');
+        const resultSpan = document.getElementById('result');
+        const initialValueInput = document.getElementById('initial-value');
+
+        function updateCalculations() {
+            let periodValue = 0;
+            let result = parseFloat(initialValueInput.value) || 0;
+
+            periodRadios.forEach(radio => {
+                if (radio.checked) {
+                    periodValue = parseFloat(radio.value);
+                }
+            });
+
+            result *= periodValue;
+            resultSpan.textContent = result.toLocaleString();
+        }
+
+        periodRadios.forEach(radio => {
+            radio.addEventListener('change', updateCalculations);
+        });
+
+        // Initial calculation
+        updateCalculations();
+    </script>
+</body>
+</html>

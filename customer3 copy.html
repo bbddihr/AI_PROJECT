@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1문의</title>
+    <style>
+        /* 이전 스타일은 유지 */
+        .editor-container {
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        .editor-toolbar {
+            background-color: #f1f1f1;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .editor-toolbar select, .editor-toolbar button {
+            margin-right: 2px;
+            padding: 2px 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+        .editor-content {
+            min-height: 200px;
+            padding: 10px;
+        }
+        .file-upload {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .file-upload button {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 2px 5px;
+            font-size: 0.9em;
+        }
+        .editor-mode {
+            text-align: right;
+            margin-top: 5px;
+        }
+        .editor-mode button {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 2px 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- 이전 코드는 유지 -->
+    <tr>
+        <th>내용</th>
+        <td>
+            <div class="editor-container">
+                <div class="editor-toolbar">
+                    <select><option>글꼴</option></select>
+                    <select><option>3pt</option></select>
+                    <button>가</button>
+                    <button><i>가</i></button>
+                    <button><u>가</u></button>
+                    <button>가</button>
+                    <button>가</button>
+                    <button>■</button>
+                    <button>1.</button>
+                    <button>가</button>
+                    <button>A</button>
+                    <button>T</button>
+                    <button>[]</button>
+                    <button>"</button>
+                    <button>URL</button>
+                    <button>그림</button>
+                    <button>표</button>
+                    <button>시간</button>
+                </div>
+                <div class="editor-content" contenteditable="true"></div>
+            </div>
+            <div class="file-upload">
+                이미지 영역을 드래그하여 이미질 크기를 조절할 수 있습니다. X
+                <button>+ 이미질 크기 조절</button>
+            </div>
+            <div class="editor-mode">
+                <button>Editor</button>
+                <button>HTML</button>
+                <button>TEXT</button>
+            </div>
+        </td>
+    </tr>
+    <!-- 이후 코드는 유지 -->
+</body>
+</html>

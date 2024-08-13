@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요양시설 비용 계산</title>
+    <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7e422ab34489fb5e80e7def0fd930351&libraries=services"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+    <link href="../css/star.css" rel="stylesheet" />
+    <title>search2</title>
+    <style>
+    body {
+        width: 100%;
+        height: 100%;
+    }
+    
+    #container {
+        background-color: white;
+    }
+    
+    h2 {
+        text-align: center;
+        background-color: green;
+        height: 5%;
+        background-image: url('../images/searchback.jpg');
+        background-size: cover;
+        background-position: center;
+        font-size: 200%;
+        color: white;
+        padding-top: 3%;
+        padding-bottom: 3%;
+    }
+    
+    #left-sidebar {
+        text-align: center;
+        height: 100%;
+        background-color: white;
+    }
+    
+    #contents {
+        width: 100%;
+        background-color: white;
+        float: left;
+    }
+    
+    #page_name {
+        text-align: left;
+        font-size: 30px;
+    }
+    
+    #right-sidebar {
+        text-align: right;
+        height: 100%;
+        background-color: white;
+    }
+    
+    table {
+        margin: 0 auto;
+        padding: 0;
+        width: 80%;
+        border-collapse: collapse;
+        height: 30%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 20px;
+        background-color: white;
+    }
+    
+    th, td {
+        border-bottom: 1px solid black;
+        border-collapse: collapse;
+        padding: 8px;
+        border-left: 0;
+        border-right: 0;
+    }
+    
+    th {
+        border-bottom: 1px solid black;
+        background-color: #03C75A;
+        color: white;
+    }
+    
+    form {
+        width: 80%;
+        margin: 0 auto;
+    }
+    
+    select, button {
+        width: 200px;
+        border: 1px solid #C4C4C4;
+        box-sizing: border-box;
+        border-radius: 10px;
+        padding: 12px 13px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 16px;
+    }
+    
+    button {
+        background-color: #03C75A;
+    }
+    
+    #map {
+        border-radius: 10px;
+        width: 45%;
+        height: 400px;
+        margin: 10px auto;
+    }
+    
+    #hospital_info_div {
+        display: none;
+        width: 80%;
+        height: 30%;
+        text-align: center;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+    
+    #hospital_info_table {
+        width: 100%;
+        height: 100%;
+        border-style: none;
+        text-align: center;
+        margin: 20px auto;
+    }
+    
+    #hospital_info_table td {
+        vertical-align: top;
+        padding: 10px;
+    }
+    
+    #btn_list {
+        text-align: center;
+    }
+    
+    p {
+        text-align: left;
+    }
+    
+    .text {
+        text-align: center;
+    }
+    
+    #review_section {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .review_box {
+        width: 80%;
+        margin: 10px auto;
+        padding: 10px;
+        border: 1px solid #C4C4C4;
+        border-radius: 10px;
+        font-size: 20px;
+        box-sizing: border-box;
+        resize: vertical;
+        height: 150px;
+    }
+    
+    .review_buttons {
+        margin: 10px auto;
+        text-align: right;
+        padding-right: 10%;
+    }
+    
+    .review_buttons button {
+        width: 100px;
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        
+    }
+    
+    #reviews_list {
+        width: 80%;
+        margin: 20px auto;
+        padding: 10px;
+        border-top: 1px solid #C4C4C4;
+        text-align: left;
+    }
+    
+    .review_item {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #C4C4C4;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+    
+    h3 {
+        color: black;
+        font-size: 30px;
+    }
+    
+    h4 {
+        color: grey;
+        font-size: 10px;
+    }
+    
+    .top-content {
+        display: flex;
+        padding-right: 10px;
+    }
+    
+    .facility-title {
+        height: 20%;
+    }
+    
+    .facility-content {
+        height: 80%;
+    }
+    
+    .facility-category {
+        font-size: 30px;
+        font-weight: 700;
+    }
+    
+    /* 계산기 부분 */
+    .calc-container {
+        text-align: center;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #ffffff; /* 흰색 배경 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    calc-container > h1 {
+        color: #388e3c; /* 다크 초록색 제목 */
+        margin-bottom: 20px;
+    }
+    
+    .checkbox-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    
+    .operation-group>label {
+        display: block;
+        margin: 10px 0;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #2c6b2f; /* 다크 초록색 레이블 */
+    }
+    
+    .checkbox-item {
+        margin-right: 10px;
+        accent-color: #2c6b2f; /* 초록색 체크박스 */
+    }
+    
+    .initial-value-group, .operation-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    
+    .initial-value-group input, .operation-group input {
+        text-align : center;
+        font-size: 3em;
+        padding: 5px;
+        width: 100%;
+        border-top : none;
+        border-left : none;
+        border-right : none;
+        border-bottom : 3px solid green;
+        box-sizing: border-box;
+    }
+    
+    .operation-group label {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    
+    .result {
+        font-weight: bold;
+        font-size: 1.5em;
+        color: #4CAF50; /* 초록색 결과 텍스트 */
+        padding: 10px;
+        border-bottom: 2px solid #4CAF50; /* 초록색 테두리 */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: transparent; /* 배경색 제거 */
+    }
+    </style>
+</head>
+<body>
+    <div class="calc-container">
+        <h1>시설 이용 비용 계산</h1>
+        <div>
+            <div class="initial-value-group">
+                <label for="initial-value">일일 이용료 : </label>
+                <input type="number" id="initial-value" value="27200" readonly>
+            </div>
+            <div class="operation-group">
+                <!-- 
+                    <label><input type="radio" name="operation" value="add" checked> 더하기</label>
+                <label><input type="radio" name="operation" value="divide"> 나누기</label>
+                -->
+                <label style="display : none;"><input type="radio" name="operation" value="multiply" checked> 곱하기</label>
+            </div>
+            <div class="period-group">
+                <label><input type="radio" name="period" value="30" checked> 1개월</label>
+                <label><input type="radio" name="period" value="180"> 6개월</label>
+                <label><input type="radio" name="period" value="365"> 1년</label>
+            </div>
+        </div>
+        <div>
+            <div class="result">
+                예상비용 : <span id="result">0</span> 원
+            </div>
+            <p>정확한 금액은 시설에 확인해야 합니다.</p>
+        </div>
+    </div>
+    
+    <script>
+        const periodRadios = document.querySelectorAll('input[name="period"]');
+        const operationRadios = document.querySelectorAll('input[name="operation"]');
+        const resultSpan = document.getElementById('result');
+        const initialValueInput = document.getElementById('initial-value');
+    
+        function updateCalculations() {
+            let periodValue = 0;
+            let result = parseFloat(initialValueInput.value) || 0;
+            let operation = document.querySelector('input[name="operation"]:checked').value;
+    
+            periodRadios.forEach(radio => {
+                if (radio.checked) {
+                    periodValue = parseFloat(radio.value);
+                }
+            });
+    
+            switch (operation) {
+                case 'add':
+                    result += periodValue;
+                    break;
+                case 'multiply':
+                    result = result === 0 ? periodValue : result * periodValue;
+                    break;
+                case 'divide':
+                    result = result === 0 ? periodValue : result / periodValue;
+                    break;
+            }
+    
+            resultSpan.textContent = result.toLocaleString();
+        }
+    
+        periodRadios.forEach(radio => {
+            radio.addEventListener('change', updateCalculations);
+        });
+    
+        operationRadios.forEach(radio => {
+            radio.addEventListener('change', updateCalculations);
+        });
+    
+        // Initial calculation
+        updateCalculations();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
