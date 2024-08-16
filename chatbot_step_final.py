@@ -1345,7 +1345,7 @@ def predict(model, sentence, index2word, device, n=10):
     
         # 입력 데이터를 텐서로 변환
         input_tensor = torch.tensor(input_padded).unsqueeze(0).to(device)  # 배치 차원을 추가하고 텐서로 변환
-        output_tensor =  torch.tensor([0 for i in range(350)]).unsqueeze(0).to(device)
+        output_tensor =  torch.tensor([0 for i in range(150)]).unsqueeze(0).to(device)
         # x, y['answer'], y['intention'] = x.to(device), y['answer'].to(device), y['intention'].to(device)  
         output = model(input_tensor, output_tensor, teacher_forcing_ratio=0)
         # output: (number of samples, sequence_length, num_vocabs)
@@ -1421,23 +1421,24 @@ import gradio as gr
 import random
 import time
 def response(message, history, additional_input_info):
-    # additional_input_info의 텍스트를 챗봇의 대답 뒤에 추가합니다.
     response = predict(model, message, dataset.wordvocab.index2word, device)
     return response
 gr.ChatInterface(
         fn=response,
         textbox=gr.Textbox(placeholder="무엇이든 물어보세요", container=False, scale=7),
-        title="치매박사🌞안깜빡이에요~",
+        
+
+         title="치매박사🌞안깜빡이에요~",
         description="뇌신경질환(치매,알코올성치매,알츠하이머병,우을증)에 대해 무엇이든 물어보세요.",
         theme="soft",
-        examples=[["치매가 의심될때는 어떤 전문의를 방문해야 하나요?"], ["알코올성 치매를 예방하는 가장 효과적인 방법은요?"], ["우울증 약물의 부작용은요?"]],
+        examples=[["치매가 의심될때는 어떤 전문의를 방문해야 하나요?"], ["우울증이 발생하는데 기여하는 원인들에 대해 알려주세요"], ["알츠하이머병 치료를 위한 약물 중 어떤 것이 일반적으로 많이 사용되나요 ?"], ["치매예방을 위한 식이요법 이나 생활습관의 중요성에 대해 설명해 주세요"]],
         retry_btn="다시보내기 ✈",
         undo_btn="이전챗 삭제 ✂",
         clear_btn="전챗 삭제 💥",
         additional_inputs=[
             gr.Textbox("!!!", label="끝말잇기")
         ]
-).launch()
+).launch(share=True)
 
 
 # In[ ]:
@@ -1451,3 +1452,50 @@ gr.ChatInterface(
 
 
 
+# import streamlit as st
+# import pandas as pd
+# # from streamlit_chat import message
+# import requests
+ 
+# API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill"
+# API_TOKEN = "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"
+# headers = {"Authorization": f"Bearer {API_TOKEN}"}
+ 
+# st.header("🤖 치매봇 (Demo)")
+
+ 
+# if 'generated' not in st.session_state:
+#     st.session_state['generated'] = []
+ 
+# if 'past' not in st.session_state:
+#     st.session_state['past'] = []
+ 
+# # def query(payload):
+# # 	response = requests.post(API_URL, headers=headers, json=payload)
+# # 	return response.json()
+# def response(message, history, additional_input_info):
+#     # additional_input_info의 텍스트를 챗봇의 대답 뒤에 추가합니다.
+#     response = predict(model, message, dataset.wordvocab.index2word, device)
+#     return response 
+ 
+# with st.form('form', clear_on_submit=True):
+#     user_input = st.text_input('You: ', '', key='input')
+#     submitted = st.form_submit_button('Send')
+ 
+# if submitted and user_input:
+#     output = response({
+#         "inputs": {
+#             "past_user_inputs": st.session_state.past,
+#             "generated_responses": st.session_state.generated,
+#             "text": user_input,
+#         },
+#         "parameters": {"repetition_penalty": 1.33},
+#     })
+ 
+#     st.session_state.past.append(user_input)
+#     st.session_state.generated.append(output["generated_text"])
+ 
+# if st.session_state['generated']:
+#     for i in range(len(st.session_state['generated'])-1, -1, -1):
+#         message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+#         message(st.session_state["generated"][i], key=str(i))
